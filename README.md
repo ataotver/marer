@@ -58,9 +58,9 @@ Or run it with no arguments (or double-click on Windows) to be prompted interact
 
 This is at the **MVP stage**, built primarily as a learning project. You're welcome to use it, but be mindful:
 
-- It hasn't been audited — don't use it to protect genuinely sensitive data yet.
+- It hasn't been audited. Don't use it to protect genuinely sensitive data yet.
 - The password is echoed to the screen as you type (no hidden input yet).
-- The "delete original" option only unlinks the file — the data remains on disk and is recoverable with forensic tools (especially on SSDs).
+- The "delete original" option only unlinks the file. The data remains on disk and is recoverable with forensic tools (especially on SSDs).
 - Same-file protection compares the paths you type as text, so it won't catch aliases like `file.txt` vs `./file.txt`.
 - Decryption requires this same tool and the same password, so there's no key exchange.
 - The derived key and password sit in normal memory (not locked or zeroed after use).
