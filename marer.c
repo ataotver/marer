@@ -192,7 +192,7 @@ if (crypto_pwhash(key, sizeof key, password, strlen(password), salt,
    goto cleanup;
 }
 
-// then initialize decryption with it
+
 if (crypto_secretstream_xchacha20poly1305_init_pull(&state, header, key) != 0) {
     fprintf(stderr, "Invalid or corrupted header\n");
     goto cleanup;
