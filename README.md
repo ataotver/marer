@@ -65,4 +65,6 @@ This is at the **MVP stage**, built primarily as a learning project. You're welc
 - Decryption requires this same tool and the same password, so there's no key exchange.
 - The derived key and password sit in normal memory (not locked or zeroed after use).
 
+This project was developed and tested on Windows/MSYS2. So you shouldn't encounter much bugs.
+
 Feedback and suggestions welcome. Hope this was helpful!
