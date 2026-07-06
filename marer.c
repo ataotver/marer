@@ -28,6 +28,7 @@ static const unsigned char MAGIC[MAGIC_LEN] = { 'M', 'E', 'R', '1' };
     unsigned char file_magic[MAGIC_LEN];
     const char *mode, *name, *new_name;  
     char mode_buf[16], name_buf[260], new_name_buf[260];
+    int encrypting;
    
     crypto_secretstream_xchacha20poly1305_state state;
 
@@ -44,6 +45,11 @@ static const unsigned char MAGIC[MAGIC_LEN] = { 'M', 'E', 'R', '1' };
     mode_buf[strcspn(mode_buf, "\n")] = '\0';
     mode = mode_buf;
 
+     if      (strcmp(mode, "encrypt") == 0) encrypting = 1;
+    else if (strcmp(mode, "decrypt") == 0) encrypting = 0;
+    else { fprintf(stderr, "Mode must be 'encrypt' or 'decrypt'\n"); printf("Press enter to continue..."); getchar(); return 1;}
+
+
     printf("Input file: ");
     if (!fgets(name_buf, sizeof name_buf, stdin)) return 1;
     name_buf[strcspn(name_buf, "\n")] = '\0';
@@ -54,12 +60,6 @@ static const unsigned char MAGIC[MAGIC_LEN] = { 'M', 'E', 'R', '1' };
     new_name_buf[strcspn(new_name_buf, "\n")] = '\0';
     new_name = new_name_buf;
 }
-
-
-    int encrypting;
-    if      (strcmp(mode, "encrypt") == 0) encrypting = 1;
-    else if (strcmp(mode, "decrypt") == 0) encrypting = 0;
-    else { fprintf(stderr, "Mode must be 'encrypt' or 'decrypt'\n"); return 1;}
 
     //File
 
@@ -248,16 +248,14 @@ if (fgets(answer, sizeof answer, stdin) != NULL &&
     }
 }
 
-printf("Press enter to continue...");
-getchar();
-
 cleanup:
     if (file)     fclose(file);
     if (new_file) {
         fclose(new_file);
         if (!output_valid){ remove(new_name);}   // delete empty/partial output on ANY failure
     }
-    
+    printf("Press enter to continue...");
+    getchar();
     return rc;
 }
 
